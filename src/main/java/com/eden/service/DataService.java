@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by 18060757 on 2018/9/11.
  */
@@ -21,4 +24,10 @@ public class DataService {
 
         return epayOrderMapper.selectByPrimaryKey(orderId);
     }
+
+    public static void main(String[] args) {
+        String[] strings = {"a", "b", "c"};
+        List<String> list = Arrays.asList(strings);
+    }
+
 }

@@ -1,16 +1,17 @@
-spring:
-    datasource:
-        name: epay
-        type: com.alibaba.druid.pool.DruidDataSource
-        druid:
-          driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/epay
-          username: root
-          password: root
-
 server:
   port: 8080
 
+spring:
+  datasource:
+    name: epay
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/epay
+      username: root
+      password: root
+  application:
+    name: course
 mybatis:
-    mapper-locations: classpath:mybatis/mapper/*.xml
-    type-aliases-package: com.eden.model
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.eden.model

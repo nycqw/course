@@ -20,7 +20,6 @@ public class DataController {
     @RequestMapping("/query")
     @ResponseBody
     public EpayOrder queryOrder(Long orderId) {
-        EpayOrder epayOrder = dataService.queryOrder(orderId);
-        return epayOrder;
+        return dataService.queryOrder(orderId);
     }
 }
