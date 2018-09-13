@@ -96,3 +96,71 @@
             type-aliases-package: com.example.demo.dao.entity
 
     5、在启动类上添加 @MapperScan("com.example.demo.dao.mapper")
+    
+## 集成分页
+    <!-- 分页依赖 -->
+    <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>1.2.3</version>
+    </dependency>
+    
+    #分页的配置
+    pagehelper:
+      offset-as-page-num: true
+      row-bounds-with-count: true
+      reasonable: true
+      
+    #在service 中使用
+    public List<EpayOrder> queryOrderByPage() {
+        // 设置PageNum、PageSize
+        PageHelper.startPage(1,2);
+        // 当前list 会被自动封装进Page，不要直接return 查询语句，否则分页会失效
+        List<EpayOrder> list = epayOrderMapper.selectEpayOrder();
+        return list;
+    }
+    
+## 集成 dubbo
+    1、服务提供者
+    1）引入依赖：当前jar包已包含zookeeper client 无需引入
+    <dependency>
+    	<groupId>com.alibaba.boot</groupId>
+    	<artifactId>dubbo-spring-boot-starter</artifactId>
+    	<version>0.2.0</version>
+    </dependency>
+    
+    2）dubbo 属性配置
+        dubbo:
+          application:
+            name: dubboTest
+          protocol:
+            name: dubbo
+            port: 20880
+          registry:
+            address: zookeeper://localhost:2181 # 注册中心地址
+          consumer: # 在服务端设置消费端的调用规则
+            timeout: 5000 # 超时时间ms
+            retries: 2  # 重试次数
+            loadbalance: roundrobin # 负载均衡算法，缺省是随机 random。还可以有轮询 roundrobin、最不活跃优先 leastactive
+    
+    3）在启动类上使用@EnableDubbo 启动dubbo
+    4）通过实现接口的方式定义服务，使用阿里的@Service 注解标注要对外曝露的服务
+    import com.alibaba.dubbo.config.annotation.Service;
+    
+    5）打包服务的接口、模型应用提供给服务消费方依赖
+    
+    2、服务消费者
+    1）引入dubbo依赖，同时引入服务提供方接口依赖
+    <dependency>
+    	<groupId>com.eden</groupId>
+    	<artifactId>dubbo-api</artifactId>
+    	<version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+    2）dubbo 外部配置同上
+    3）在启动类上使用@EnableDubbo 启动dubbo
+    4）使用阿里@Reference 注解将远程服务装配到Controller 中
+    import com.alibaba.dubbo.config.annotation.Reference;
+    
+    5）管理控制台安装
+    http://dubbo.apache.org/zh-cn/docs/admin/install/admin-console.html

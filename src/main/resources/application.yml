@@ -12,6 +12,24 @@ spring:
       password: root
   application:
     name: course
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   type-aliases-package: com.eden.model
+
+#分页的配置
+pagehelper:
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  reasonable: true
+
+dubbo:
+  application:
+    name: dubbo-provider
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://localhost:2181
+  provider:
+    timeout: 1000
