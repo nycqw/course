@@ -9,8 +9,7 @@ public interface PayConstants {
     int WX_PAY = 1;
     // 支付宝支付
     int ALI_PAY = 2;
-
-    // 支付处理根路径
-    String PAY_BASE_PACKAGE = "com.eden.service.pay.impl";
+    // 苏宁支付
+    int SUNING_PAY = 3;
 
 }

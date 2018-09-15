@@ -8,13 +8,13 @@ import com.eden.service.pay.annotation.Pay;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 
-import static com.eden.service.pay.constants.PayConstants.ALI_PAY;
+import static com.eden.service.pay.constants.PayConstants.SUNING_PAY;
 
 /**
  * 支付宝支付
  */
-@Pay(ALI_PAY)
-public class AliPayment implements Payment {
+@Pay(SUNING_PAY)
+public class SnPayment implements Payment {
 
     @Resource
     private EdenProductMapper edenProductMapper;
