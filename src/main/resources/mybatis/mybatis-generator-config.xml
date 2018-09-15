@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <classPathEntry  location="E:/maven/repo/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
+    <classPathEntry  location="F:/Maven/localRepository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
     <context id="DB2Tables"  targetRuntime="MyBatis3">
         <!-- 注释配置 -->
         <commentGenerator>
@@ -13,7 +13,7 @@
         
         <!-- 数据库配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/epay?characterEncoding=utf8"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/nycqw?characterEncoding=utf8"
                         userId="root" password="root">
         </jdbcConnection>
         
@@ -39,6 +39,6 @@
         
  		<!-- 修改tableName、domainObjectName -->
         <!-- 设置启动命令：Run -> Edit Configurations -> + -> Maven -> Command line -> mybatis-generator:generate -e-->
- 		<table tableName="epay_order" domainObjectName="EpayOrder" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+ 		<table tableName="eden_product" domainObjectName="EdenProduct" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>

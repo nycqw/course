@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eden.mapper.EdenProductMapper" >
+  <resultMap id="BaseResultMap" type="com.eden.model.EdenProduct" >
+    <id column="good_id" property="goodId" jdbcType="BIGINT" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    good_id, fee
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from eden_product
+    where good_id = #{goodId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from eden_product
+    where good_id = #{goodId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.eden.model.EdenProduct" >
+    insert into eden_product (good_id, fee)
+    values (#{goodId,jdbcType=BIGINT}, #{fee,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eden.model.EdenProduct" >
+    insert into eden_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodId != null" >
+        #{goodId,jdbcType=BIGINT},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eden.model.EdenProduct" >
+    update eden_product
+    <set >
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where good_id = #{goodId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eden.model.EdenProduct" >
+    update eden_product
+    set fee = #{fee,jdbcType=DECIMAL}
+    where good_id = #{goodId,jdbcType=BIGINT}
+  </update>
+</mapper>

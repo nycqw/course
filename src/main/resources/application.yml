@@ -33,3 +33,4 @@ dubbo:
     address: zookeeper://localhost:2181
   provider:
     timeout: 1000
+

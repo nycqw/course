@@ -8,7 +8,7 @@
     <contextName>logback</contextName>
 
     <!-- 日志存放根路径，可在配置文件中设置 -->
-    <property name="logging.path" value="E:/selfspace/log/course01"/>
+    <property name="logging.path" value="../logs"/>
 
     <!--输出到控制台-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
