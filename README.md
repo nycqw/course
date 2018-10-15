@@ -97,6 +97,37 @@
 
     5、在启动类上添加 @MapperScan("com.example.demo.dao.mapper")
     
+    6、开启druid的监控功能
+        ## 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+        spring:
+          datasource:
+            filters: [stat,wall,log4j]
+        ## 定义filter
+        @WebFilter(filterName="druidWebStatFilter",urlPatterns="/*",
+                initParams={
+                        @WebInitParam(name="exclusions",value="*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*")// 忽略资源
+                })
+        public class DruidStatFilter extends WebStatFilter {
+        }
+        
+        @SuppressWarnings("serial")
+        @WebServlet(urlPatterns = "/druid/*",
+                initParams={
+                        @WebInitParam(name="allow",value="192.168.3.87,127.0.0.1"),// IP白名单 (没有配置或者为空，则允许所有访问)
+                        @WebInitParam(name="deny",value="192.168.16.111"),// IP黑名单 (存在共同时，deny优先于allow)
+                        @WebInitParam(name="loginUsername",value="root"),// 用户名
+                        @WebInitParam(name="loginPassword",value="admin"),// 密码
+                        @WebInitParam(name="resetEnable",value="false")// 禁用HTML页面上的“Reset All”功能
+                })
+        public class DruidStatViewServlet extends StatViewServlet {
+        }
+        
+        ## 在启动类中加上servlet的扫描注解
+        @ServletComponentScan
+        
+        ## 内置监控展示页面
+        http://localhost:8080/druid/index.html
+    
 ## 集成分页
     <!-- 分页依赖 -->
     <dependency>
