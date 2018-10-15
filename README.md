@@ -127,6 +127,7 @@
         
         ## 内置监控展示页面
         http://localhost:8080/druid/index.html
+        
     
 ## 集成分页
     <!-- 分页依赖 -->
