@@ -21,9 +21,9 @@ public class AliPayment implements Payment {
 
     @Override
     public BigDecimal calRecharge(Integer channelId, Integer goodsId) {
-        EdenProduct edenProduct = edenProductMapper.selectByPrimaryKey(Long.valueOf(goodsId));
+        EdenProduct edenProduct = edenProductMapper.selectByPrimaryKey(String.valueOf(goodsId));
         if (edenProduct != null) {
-            return new BigDecimal(edenProduct.getFee());
+            return new BigDecimal(edenProduct.getPrice());
         }
         return null;
     }

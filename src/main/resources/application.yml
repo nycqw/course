@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: course
   datasource:
     name: epay
     type: com.alibaba.druid.pool.DruidDataSource
@@ -11,8 +13,13 @@ spring:
       username: root
       password: root
       filters: [stat,wall,log4j]
-  application:
-    name: course
+  rabbitmq:
+    host: 106.14.187.183
+    port: 5672
+    username: root
+    password: 123456
+    publisher-confirms: true # 发布确认
+    virtual-host: /
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml

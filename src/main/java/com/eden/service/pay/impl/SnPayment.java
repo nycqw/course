@@ -21,10 +21,6 @@ public class SnPayment implements Payment {
 
     @Override
     public BigDecimal calRecharge(Integer channelId, Integer goodsId) {
-        EdenProduct edenProduct = edenProductMapper.selectByPrimaryKey(Long.valueOf(goodsId));
-        if (edenProduct != null) {
-            return new BigDecimal(edenProduct.getFee());
-        }
-        return null;
+        return new BigDecimal(200);
     }
 }

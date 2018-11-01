@@ -18,14 +18,16 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
+ * 支付处理类
+ * 新增支付渠道的时候只需将支付实现类实现Payment 接口并标注@Pay 注解即可
  */
 @Component
 @Slf4j
 public class PaymentHandler implements Payment, ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
-    private static Map<Integer, String> paymentMap = new ConcurrentHashMap<>();
+    private static Map<Integer, String> classMap = new ConcurrentHashMap<>();
+    private static Map<Integer, Payment> instanceMap = new ConcurrentHashMap<>();
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -39,7 +41,7 @@ public class PaymentHandler implements Payment, ApplicationContextAware {
         for (Class<?> payClazz : paySet) {
             Pay annotation = payClazz.getAnnotation(Pay.class);
             Integer channelId = annotation.value();
-            paymentMap.put(channelId, payClazz.getCanonicalName());
+            classMap.put(channelId, payClazz.getCanonicalName());
         }
     }
 
@@ -55,7 +57,7 @@ public class PaymentHandler implements Payment, ApplicationContextAware {
         try {
             payment = create(channelId);
         } catch (UnsupportedPaymentChannelsException e) {
-            log.error("不支持的支付类型");
+            log.error("不支持的渠道类型");
         } catch (Exception e) {
             log.error("系统异常！", e);
         }
@@ -72,14 +74,21 @@ public class PaymentHandler implements Payment, ApplicationContextAware {
      * @throws InstantiationException
      */
     public Payment create(Integer channelId) throws UnsupportedPaymentChannelsException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-        if (!paymentMap.containsKey(channelId)) {
+        if (!classMap.containsKey(channelId)) {
             throw new UnsupportedPaymentChannelsException(channelId.toString());
         }
-        String payClazzName = paymentMap.get(channelId);
-        Class<?> payClazz = Class.forName(payClazzName);
-        Payment payment = (Payment) payClazz.newInstance();
-        initAutowiredField(payClazz, payment);
-        return payment;
+        return instantiationPayment(channelId);
+    }
+
+    private Payment instantiationPayment(Integer channelId) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        String clazzName = classMap.get(channelId);
+        Class<?> clazz = Class.forName(clazzName);
+        if (!instanceMap.containsKey(channelId)) {
+            Payment payment = (Payment) clazz.newInstance();
+            initAutowiredField(clazz, payment);
+            instanceMap.put(channelId, payment);
+        }
+        return instanceMap.get(channelId);
     }
 
     /**
@@ -104,7 +113,7 @@ public class PaymentHandler implements Payment, ApplicationContextAware {
             try {
                 field.set(payment, bean);
             } catch (IllegalAccessException e) {
-                log.error("字段设置失败", e);
+                log.error("依赖注入失败！", e);
             }
         }
     }

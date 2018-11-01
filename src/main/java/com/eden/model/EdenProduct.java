@@ -1,23 +1,33 @@
 package com.eden.model;
 
 public class EdenProduct {
-    private Long goodId;
+    private String productId;
 
-    private Long fee;
+    private Double price;
 
-    public Long getGoodId() {
-        return goodId;
+    private String description;
+
+    public String getProductId() {
+        return productId;
     }
 
-    public void setGoodId(Long goodId) {
-        this.goodId = goodId;
+    public void setProductId(String productId) {
+        this.productId = productId == null ? null : productId.trim();
     }
 
-    public Long getFee() {
-        return fee;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setFee(Long fee) {
-        this.fee = fee;
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

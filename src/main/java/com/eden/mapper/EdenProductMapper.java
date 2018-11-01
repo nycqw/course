@@ -3,13 +3,13 @@ package com.eden.mapper;
 import com.eden.model.EdenProduct;
 
 public interface EdenProductMapper {
-    int deleteByPrimaryKey(Long goodId);
+    int deleteByPrimaryKey(String productId);
 
     int insert(EdenProduct record);
 
     int insertSelective(EdenProduct record);
 
-    EdenProduct selectByPrimaryKey(Long goodId);
+    EdenProduct selectByPrimaryKey(String productId);
 
     int updateByPrimaryKeySelective(EdenProduct record);
 
